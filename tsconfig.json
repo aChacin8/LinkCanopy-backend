@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist", //Donde se compila el proyecto
+        "rootDir": "./src", //Carpeta principal donde se va a encontrar el codigo
+        "lib": ["ESNext"], //'EsNext' Se refiere a la version mas reciente de ECMAScript
+        "target": "ESNext",
+        "moduleResolution": "NodeNext",
+        "module": "NodeNext",
+        "strict": false,
+        "sourceMap": true, //referencia al codigo original
+        "declaration": true
+    }, 
+    "include": ["src/**/*.ts"] //Va a buscar todos los archivos que tengan .ts
+}
