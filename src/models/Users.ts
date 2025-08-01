@@ -4,8 +4,9 @@ interface IUser {
     handle: string,
     firstName: string,
     lastName: string,
+    phone: string, 
     email: string,
-    password: string
+    password: string,
 } //La interface funciona como espejo
 
 const userSchema = new Schema ({ 
