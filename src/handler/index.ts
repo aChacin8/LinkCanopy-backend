@@ -13,7 +13,8 @@ export const createUser = async (req: Request, res: Response) => {
             res.status(409).json({ error: error.message })
         }
 
-        const handle = slug(req.body.name, '')
+        const fullName = req.body.firstName + ' ' + req.body.lastName
+        const handle = slug(fullName, '')
         const handleExist = await User.findOne({ handle })
         if (handleExist) {
             const error = new Error('Username not available')

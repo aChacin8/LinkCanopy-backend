@@ -9,7 +9,10 @@ router.post('/auth/register',
             body('handle')
                 .notEmpty()
                 .withMessage('Handle cannot be empty'),
-            body('name')
+            body('firstName')
+                .notEmpty()
+                .withMessage('First Name cannot be empty'),
+            body('lastName')
                 .notEmpty()
                 .withMessage('Name cannot be empty'),
             body('email')

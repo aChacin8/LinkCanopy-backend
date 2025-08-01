@@ -2,7 +2,8 @@ import mongoose, { Schema } from "mongoose";
 
 interface IUser {
     handle: string,
-    name: string,
+    firstName: string,
+    lastName: string,
     email: string,
     password: string
 } //La interface funciona como espejo
@@ -15,10 +16,21 @@ const userSchema = new Schema ({
         lowercase: true,
         unique: true,
     },
-    name: {
+    firstName: {
         type: String,
         required: true, 
         trim: true//Si un usario agrega un nombre con espacios en blanco, elimina estos
+    },
+    lastName: {
+        type: String,
+        required: true, 
+        trim: true//Si un usario agrega un nombre con espacios en blanco, elimina estos
+    },
+    phone: {
+        type: String,
+        required: false,
+        trim: true,
+        unique: true
     },
     email: {
         type: String,
