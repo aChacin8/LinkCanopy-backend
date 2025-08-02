@@ -2,6 +2,7 @@ import { Request, Response } from "express"; //Para evitar el any en req y res
 import slug from 'slug'
 import User from "../models/Users";
 import { checkPassword, hashPassword } from "../utils/auth";
+import { generateToken } from "../utils/token";
 
 export const createUser = async (req: Request, res: Response) => {
     try {
@@ -49,8 +50,9 @@ export const loginUser = async( req: Request, res: Response) => {
             const error = new Error ('Incorrect password')
             return res.status(401).json({ error: error.message })
         }
-
-        res.status(200).send('Login successful')
+        const token = generateToken ({id: user._id, handle: user.handle})
+        res.status(200).send('Login success')
+        
         } catch (error) {
             res.status(400).send('Bad Syntax, try again')
         }

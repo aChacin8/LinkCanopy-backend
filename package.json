@@ -17,11 +17,13 @@
     "dotenv": "^17.2.0",
     "express": "^5.1.0",
     "express-validator": "^7.2.1",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.16.4",
     "slug": "^11.0.0"
   },
   "devDependencies": {
     "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/slug": "^5.0.9",
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",
