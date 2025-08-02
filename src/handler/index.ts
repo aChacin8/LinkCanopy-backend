@@ -51,7 +51,7 @@ export const loginUser = async( req: Request, res: Response) => {
             return res.status(401).json({ error: error.message })
         }
         const token = generateToken ({id: user._id, handle: user.handle})
-        res.status(200).send('Login success')
+        res.status(200).send(token)
         
         } catch (error) {
             res.status(400).send('Bad Syntax, try again')
