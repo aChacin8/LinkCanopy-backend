@@ -1,8 +1,10 @@
 import { Request, Response } from "express"; //Para evitar el any en req y res
 import slug from 'slug'
+
 import User from "../models/Users";
 import { checkPassword, hashPassword } from "../utils/auth";
 import { generateToken } from "../utils/token";
+import { authValidation } from "../middlewares/authValidation";
 
 export const createUser = async (req: Request, res: Response) => {
     try {
@@ -58,3 +60,8 @@ export const loginUser = async( req: Request, res: Response) => {
         }
     
 }
+
+export const getUser = async (req: Request, res: Response)=> {
+    console.log(req.user);
+    return res.json(req.user)
+}   
