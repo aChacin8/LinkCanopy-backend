@@ -28,7 +28,7 @@ export const authValidation = async (req: Request, res: Response, next: NextFunc
         console.log(result);
         
         if (typeof result === 'object' && result.id){
-            const user = await User.findById(result.id).select('handle')
+            const user = await User.findById(result.id).select('-password')
             
             if (!user){
                 const error = new Error ('Invalid User')
