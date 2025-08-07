@@ -7,6 +7,7 @@ export interface IUser {
     phone: string, 
     email: string,
     password: string,
+    description?: string
 } //La interface funciona como espejo
 
 const userSchema = new Schema ({ 
@@ -44,6 +45,11 @@ const userSchema = new Schema ({
         required: true,
         trim: true
     },
+    description: {
+        type: String,
+        required: false,
+        default: ''
+    }
 })
 
 const User = mongoose.model<IUser>('User',userSchema) //El modelo de Usuarios con el generic
