@@ -4,11 +4,10 @@ import slug from 'slug'
 import User from "../models/Users";
 import { checkPassword, hashPassword } from "../utils/auth";
 import { generateToken } from "../utils/token";
-import { authValidation } from "../middlewares/authValidation";
 
 export const createUser = async (req: Request, res: Response) => {
     try {
-        const { email, password } = req.body
+        const { email, password, phone } = req.body
 
         const userExist = await User.findOne({ email }) //findOne es como un Where
         if (userExist) {
@@ -16,11 +15,16 @@ export const createUser = async (req: Request, res: Response) => {
             res.status(409).json({ error: error.message })
         }
 
-        const fullName = req.body.firstName + ' ' + req.body.lastName
-        const handle = slug(fullName, '')
+        const handle = slug(req.body.handle, '')
         const handleExist = await User.findOne({ handle })
         if (handleExist) {
             const error = new Error('Username not available')
+            res.status(409).json({ error: error.message })
+        }
+
+        const phoneExist = await User.findOne({ phone })
+        if (phoneExist) {
+            const error = new Error('This phone is already registered')
             res.status(409).json({ error: error.message })
         }
 
@@ -37,7 +41,6 @@ export const createUser = async (req: Request, res: Response) => {
 }
 
 export const loginUser = async( req: Request, res: Response) => {
-    
         try {
             const { email, password } = req.body
         
@@ -61,7 +64,31 @@ export const loginUser = async( req: Request, res: Response) => {
     
 }
 
-export const getUser = async (req: Request, res: Response)=> {
+export const getUser = async (req: Request, res: Response) => {
     console.log(req.user);
     return res.json(req.user)
 }   
+
+export const updateInfo = async (req: Request, res: Response) => {
+    try {
+        const { description } = req.body 
+
+        const handle = slug (req.body.handle, '')
+        const handleExist = await User.findOne({ handle})
+
+        if (handleExist && handleExist.email !== req.user.email) {
+            const error = new Error ('Username not available')
+            return res.status(409).json({ error: error.message })
+        }
+
+        req.user.description = description;
+        req.user.handle = handle;
+
+        await req.user.save()
+        res.status(200).send('Profile updated successfully')
+
+    } catch (error) {
+        const err = new Error ('Bad Syntax, try again')
+        res.status(500).json({ error: err.message })
+    }
+}
