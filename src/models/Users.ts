@@ -1,6 +1,6 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
 
-export interface IUser {
+export interface IUser extends Document { //Interfaz de Usuario se extiende del Document de mongoose, es decir, podemos usar los metodos de mongoose
     handle: string,
     firstName: string,
     lastName: string,
