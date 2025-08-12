@@ -25,7 +25,6 @@ export const authValidation = async (req: Request, res: Response, next: NextFunc
     
     try {
         const result = jwt.verify(token, process.env.JWT_SECRET)
-        console.log(result);
         
         if (typeof result === 'object' && result.id){
             const user = await User.findById(result.id).select('-password')
