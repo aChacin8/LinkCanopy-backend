@@ -68,7 +68,6 @@ export const loginUser = async( req: Request, res: Response) => {
 }
 
 export const getUser = async (req: Request, res: Response) => {
-    console.log(req.user);
     return res.json(req.user)
 }   
 
@@ -97,7 +96,8 @@ export const updateInfo = async (req: Request, res: Response) => {
 }
 
 export const updloadImage = async (req: Request, res: Response) => {
-    const form = formidable({multiples: false}) //Solo se puede subir una imagen
+    try {
+        const form = formidable({multiples: false}) //Solo se puede subir una imagen
         form.parse(req, (err, fields, files) => {
             cloudinary.uploader.upload(files.file[0].filepath, {public_id: generateId()}, async (err, result) => {
                 if (err) {
@@ -106,14 +106,12 @@ export const updloadImage = async (req: Request, res: Response) => {
                 } 
 
                 if(result){
-                    req.user.image = result.secure_url
+                    req.user.img = result.secure_url
                     await req.user.save()
                     res.json({ img: result.secure_url})
                 }
             })
         })
-    try {
-        
     } catch (error) {
         const err = new Error ('Bad Syntax,  try again')
         res.status(500).json({ error: err.message })
