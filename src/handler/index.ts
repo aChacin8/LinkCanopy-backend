@@ -99,7 +99,7 @@ export const updateInfo = async (req: Request, res: Response) => {
 export const updloadImage = async (req: Request, res: Response) => {
     const form = formidable({multiples: false}) //Solo se puede subir una imagen
         form.parse(req, (err, fields, files) => {
-            cloudinary.uploader.upload(files.cv[0].filepath, {public_id: generateId()}, async (err, result) => {
+            cloudinary.uploader.upload(files.file[0].filepath, {public_id: generateId()}, async (err, result) => {
                 if (err) {
                     const err = new Error ('An Error has been ocurred trying to upload image')
                     res.status(401).json({ error: err.message})
