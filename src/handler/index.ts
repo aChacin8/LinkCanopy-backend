@@ -1,9 +1,12 @@
 import { Request, Response } from "express"; //Para evitar el any en req y res
 import slug from 'slug'
+import formidable from 'formidable'
 
 import User from "../models/Users";
 import { checkPassword, hashPassword } from "../utils/auth";
 import { generateToken } from "../utils/token";
+import cloudinary from "../config/cloudinary";
+import { generateId } from "../config/crypto";
 
 export const createUser = async (req: Request, res: Response) => {
     try {
@@ -89,6 +92,30 @@ export const updateInfo = async (req: Request, res: Response) => {
 
     } catch (error) {
         const err = new Error ('Bad Syntax, try again')
+        res.status(500).json({ error: err.message })
+    }
+}
+
+export const updloadImage = async (req: Request, res: Response) => {
+    const form = formidable({multiples: false}) //Solo se puede subir una imagen
+        form.parse(req, (err, fields, files) => {
+            cloudinary.uploader.upload(files.cv[0].filepath, {public_id: generateId()}, async (err, result) => {
+                if (err) {
+                    const err = new Error ('An Error has been ocurred trying to upload image')
+                    res.status(401).json({ error: err.message})
+                } 
+
+                if(result){
+                    req.user.image = result.secure_url
+                    await req.user.save()
+                    res.json({ img: result.secure_url})
+                }
+            })
+        })
+    try {
+        
+    } catch (error) {
+        const err = new Error ('Bad Syntax,  try again')
         res.status(500).json({ error: err.message })
     }
 }
