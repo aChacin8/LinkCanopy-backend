@@ -7,7 +7,8 @@ export interface IUser extends Document { //Interfaz de Usuario se extiende del 
     phone: string, 
     email: string,
     password: string,
-    description?: string
+    description?: string,
+    image: string
 } //La interface funciona como espejo
 
 const userSchema = new Schema ({ 
@@ -48,6 +49,10 @@ const userSchema = new Schema ({
     description: {
         type: String,
         required: false,
+        default: ''
+    },
+    image: {
+        type: String,
         default: ''
     }
 })
