@@ -51,6 +51,6 @@ router.patch ('/user',
                 .withMessage('Handle cannot be empty'),
             authValidation, updateInfo)
 
-router.post ('/user/image', authValidation, updloadImage)
+router.post ('/user/img', authValidation, updloadImage)
 
 export default router
