@@ -118,3 +118,19 @@ export const updloadImage = async (req: Request, res: Response) => {
         res.status(500).json({ error: err.message })
     }
 }
+
+export const getUserByHandle= async (req: Request, res: Response) => {
+    try {        
+        const { handle } = req.params
+        const validUser = await User.findOne({handle}).select('-_id -email -password -__v')
+        if (!validUser){
+            const err = new Error ('The User doesn´t exist')
+            return res.status(404).json({err: err.message})
+        }
+        res.status(200).json({validUser})
+
+    } catch (error) {
+        const err = new Error ('Something went wrong trying get the User by username')
+        res.status(500).json({error: err.message})
+    }
+}
