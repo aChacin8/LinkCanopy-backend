@@ -127,7 +127,7 @@ export const getUserByHandle= async (req: Request, res: Response) => {
             const err = new Error ('The User doesn´t exist')
             return res.status(404).json({err: err.message})
         }
-        res.status(200).json({validUser})
+        res.status(200).json(validUser)
 
     } catch (error) {
         const err = new Error ('Something went wrong trying get the User by username')
