@@ -122,7 +122,7 @@ export const updloadImage = async (req: Request, res: Response) => {
 export const getUserByHandle= async (req: Request, res: Response) => {
     try {        
         const { handle } = req.params
-        const validUser = await User.findOne({handle}).select('-_id -email -password -__v')
+        const validUser = await User.findOne({handle}).select('-_id -email -password -__v phone')
         if (!validUser){
             const err = new Error ('The User doesn´t exist')
             return res.status(404).json({err: err.message})
