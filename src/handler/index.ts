@@ -134,3 +134,20 @@ export const getUserByHandle= async (req: Request, res: Response) => {
         res.status(500).json({error: err.message})
     }
 }
+
+export const getHandle = async (req: Request, res: Response) => {
+    try {
+        const { handle } = req.body
+        const handleExist = await User.findOne({handle})
+
+        if (handleExist){
+            const error = new Error ('Username not available')
+            return res.status(409).json({ error: error.message })
+        }
+        res.status(200).send('Username available')
+
+    } catch (error) {
+        const err = new Error ('Something went wrong trying get the username')
+        res.status(500).json({error: err.message})
+    }
+}
