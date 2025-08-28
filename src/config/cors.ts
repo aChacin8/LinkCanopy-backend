@@ -1,7 +1,17 @@
 import { CorsOptions} from 'cors';
 
-const CORS = process.env.CORS_ORIGIN || 'http://localhost:5000';
+const allowedOrigins = [
+  "http://localhost:5173", 
+  process.env.CORS_ORIGIN  
+];
 
-export const corsConfig : CorsOptions = {
-    origin: CORS
-}
+export const corsConfig: CorsOptions = {
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("No permitido por CORS"));
+    }
+  },
+};
+
