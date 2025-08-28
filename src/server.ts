@@ -12,6 +12,6 @@ const app = express ()
 app.use(cors (corsConfig))
 app.use(express.json())
 
-app.use('/api', router)
+app.use( router)
 
 export default app
