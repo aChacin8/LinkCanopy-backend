@@ -1,0 +1,94 @@
+paths:
+  /auth/register:
+    post:
+      summary: Register a new user
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - handle
+                - firstName
+                - lastName
+                - email
+                - password
+              properties:
+                handle:
+                  type: string
+                  example: alejandrochacin
+                firstName:
+                  type: string
+                  example: Alejandro
+                lastName:
+                  type: string
+                  example: Chacín
+                phone:
+                  type: string
+                  example: "5512345678"
+                email:
+                  type: string
+                  example: alejandr28chac1n@gmail.com
+                password:
+                  type: string
+                  example: Usuario1*
+                description:
+                  type: string
+                  example: Desarrollador backend apasionado por Node.js
+                img:
+                  type: string
+                  example: https://cdn.img.com/profile.jpg
+                links:
+                  type: string
+                  example: '["https://github.com/aChacin8","https://www.linkedin.com/in/alejandro-chacin-nava-296907363/"]'
+      responses:
+        "201":
+          description: User Created Successfully
+        "400":
+          description: Bad Syntax, try again
+        "409":
+          description: This email is already registered
+          description: Username not available
+          description: This phone is already registered
+
+  /auth/login:
+    post:
+      summary: User login
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  example: alejandro@example.com
+                password:
+                  type: string
+                  example: Password@123
+      responses:
+        "200":
+          description: "Token Body"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        "400":
+          description: Bad Syntax, try again
+        "401":
+          description: User not found
+          description: Incorrect password
+        
