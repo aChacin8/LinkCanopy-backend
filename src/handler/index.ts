@@ -37,7 +37,7 @@ export const createUser = async (req: Request, res: Response) => {
         
         await user.save()
 
-        res.status(201).send('User Created')
+        res.status(201).send('User Created Successfully')
     } catch (error) {
         res.status(400).send ('Bad Syntax, try again')
     }

@@ -1,0 +1,32 @@
+paths:
+  /search/handle:
+    post:
+      summary: Search user by handle for availability to register
+      tags:
+        - Search
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - handle
+              properties:
+                handle:
+                  type: string
+                  example: alejandrochacin
+      responses:
+        "200":
+          description: Username available
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    $ref: "#/components/schemas/User"
+        "409":
+          description: Username not available
+        "500":
+          description: Something went wrong trying get the username
