@@ -1,0 +1,114 @@
+paths:
+  /user:
+    get:
+      summary: get authenticated user information
+      security:
+        - bearerAuth: []
+      tags:
+        - User
+      responses:
+        "200":
+          description: User Informstion
+          content:
+            application/json:
+              schema:
+                $ref: "#/models/User"
+        "401":
+          description: Token no sent, Not Authorized
+        "404":
+          description: Invalid User
+        "501":
+          description: Internal Server Error
+
+    patch:
+      summary: Update authenticated user information
+      security:
+        - bearerAuth: []
+      tags:
+        - User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - handle
+              properties:
+                handle:
+                  type: string
+                  example: alejandrochacin
+                firstName:
+                  type: string
+                  example: Alejandro
+                lastName:
+                  type: string
+                  example: Chacín
+                phone:
+                  type: string
+                  example: "5512345678"
+                description:
+                  type: string
+                  example: Desarrollador backend
+                links:
+                  type: string
+                  example: '["https://github.com/aChacin8","https://www.linkedin.com/in/alejandro-chacin-nava-296907363/"]'
+      responses:
+        "200":
+          description: Profile updated successfully
+        "409":
+          description: Username not available
+        "500":
+          description: Bad Syntax,  try again
+
+  /user/img:
+    post:
+      summary: Load or update profile image
+      description: Allows the authenticated user to upload or update their profile image.
+      security:
+        - bearerAuth: []
+      tags:
+        - User
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                img:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Image uploaded successfully
+        "401":
+          description: An Error has been ocurred trying to upload image
+        "500":
+          description: Bad Syntax, try again
+
+  /user/{handle}:
+    get:
+      summary: Get user information by handle
+      tags:
+        - User
+      parameters:
+        - name: handle
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique handle of the user
+          example: alejandrochacin
+      responses:
+        "200":
+          description: User Information (only handle)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "404":
+          description: The User doesn´t exist
+        "500":
+          description: Something went wrong trying get the User by username
+
