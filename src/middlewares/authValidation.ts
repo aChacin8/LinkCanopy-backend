@@ -38,6 +38,6 @@ export const authValidation = async (req: Request, res: Response, next: NextFunc
         }
         
     } catch (error) {
-        res.status(501).send('No valid token')
+        res.status(501).send('Internal Server Error')
     }
 }
