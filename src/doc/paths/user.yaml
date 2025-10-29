@@ -12,7 +12,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/models/User"
+                $ref: "#/components/schemas/User"
         "401":
           description: Token no sent, Not Authorized
         "404":
